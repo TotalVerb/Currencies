@@ -4,12 +4,7 @@ include("decimals.jl")
 include("templates.jl")
 include("render.jl")
 
-# FIXME: For compatibility reasons; change for 0.4.0 release
-Base.show(io::IO, m::Monetary) =
-        show(IOContext(io, :compact => true), "text/plain", m)
-Base.show(io::IO, b::Basket) = show(io, "text/plain", b)
-
-function Base.show(io::IO, ::MIME"text/plain", m::Monetary)
+function Base.show(io::IO, m::Monetary)
     if get(io, :compact, false)
         print(io, m / unit(m), currency(m))
     else
@@ -17,7 +12,7 @@ function Base.show(io::IO, ::MIME"text/plain", m::Monetary)
     end
 end
 
-function Base.show(io::IO, ::MIME"text/plain", b::Basket)
+function Base.show(io::IO, b::Basket)
     if get(io, :multiline, false)
         len = length(b)
         write(io, "$len-currency $(typeof(b)):")

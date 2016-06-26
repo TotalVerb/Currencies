@@ -21,12 +21,6 @@ end
 
 # Provide writemime ⇒ show fallback
 if VERSION < v"0.5.0-dev+4356"
-    verbose_show(io, m, x) =
-            show(IOContext(io, multiline=true, limit=false), m, x)
     Base.show(x::IO, y::AbstractString, z) = show(x, MIME(y), z)
     Base.writemime(x::IO, y, z) = show(x, y, z)
-
-    # Replaces multimedia.jl's version (typing so it's more specific)
-    Base.Multimedia.reprmime{K}(m::MIME"text/plain", x::K) =
-            sprint(verbose_show, m, x)
 end

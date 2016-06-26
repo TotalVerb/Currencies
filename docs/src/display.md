@@ -2,14 +2,15 @@
 
 ## Quick Display
 
-The representation used by `show` and `print` is the same, and is fairly
-compact. (Note that this behaviour is retained for compatibility and will likely
-change in the future.)
+The representation used by `show` and `print` is the same, and is a plain but
+readable representation of the `Monetary` value. For a more compact
+representation, this library supports Julia's `IOContext` functionality.
 
 ```@repl disp
 using Currencies  # hide
 @usingcurrencies USD  # hide
 show(100USD)
+show(IOContext(STDOUT, compact=true), 100USD)
 ```
 
 When a richer representation than `text/plain` is available, such as in an

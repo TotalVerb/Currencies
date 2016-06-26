@@ -22,7 +22,7 @@ end
 
 @testset "newcurrency!()" begin
     @test stringmime("text/plain", 20custom) == "20.000000 custom"
-    @test string(20custom) == "20.0custom"
+    @test sprint(showcompact, 20custom) == "20.0custom"
     @test format(-20custom) == "(20.000000) custom"
     @test 10custom / 10000000 == 0.000001custom
 

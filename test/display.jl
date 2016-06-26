@@ -45,9 +45,9 @@ end
 end
 
 @testset "print & show" begin
-    @test string(USD) == "1.0USD"
-    @test string(0.01USD) == "0.01USD"
-    @test string(20JPY) == "20.0JPY"
+    @test string(USD) == "1.00 USD"
+    @test string(0.01USD) == "0.01 USD"
+    @test string(20JPY) == "20 JPY"
 
     # this test is a bit complicated because order is undefined
     basketstr = string(Basket([USD, 20CAD, -10JPY]))
