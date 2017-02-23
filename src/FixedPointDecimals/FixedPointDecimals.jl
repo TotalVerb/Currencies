@@ -32,8 +32,6 @@ import Base: reinterpret, zero, one, abs, sign, ==, <, <=, +, -, /, *, div,
              typemin, typemax, realmin, realmax, show, convert, promote_rule,
              min, max, trunc, round, floor, ceil
 
-floattype(_) = Float64
-
 """
     FixedDecimal{I <: Integer, f::Int}
 
@@ -52,6 +50,10 @@ immutable FixedDecimal{T <: Integer, f} <: Real
 end
 
 const FD = FixedDecimal
+
+floattype{T<:Union{Int8, UInt8, Int16, UInt16}, f}(::Type{FD{T, f}}) = Float64
+floattype{T<:Integer, f}(::Type{FD{T, f}}) = Float64
+floattype{f}(::Type{FD{BigInt, f}}) = BigFloat
 
 reinterpret{T<:Integer, f}(::Type{FD{T, f}}, x::T) = FD{T, f}(x, nothing)
 

@@ -47,12 +47,12 @@ end
 @testset "print & show" begin
     @test string(USD) == "1.0USD"
     @test string(0.01USD) == "0.01USD"
-    @test string(20JPY) == "20JPY"
+    @test string(20JPY) == "20.0JPY"
 
     # this test is a bit complicated because order is undefined
     basketstr = string(Basket([USD, 20CAD, -10JPY]))
     @test contains(basketstr, "Basket([")
-    @test contains(basketstr, "-10JPY")
+    @test contains(basketstr, "-10.0JPY")
     @test contains(basketstr, "20.0CAD")
 
     # test compatibility between show & print
