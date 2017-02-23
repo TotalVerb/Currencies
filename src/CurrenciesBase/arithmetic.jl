@@ -37,8 +37,8 @@ Base.isless{T,U,V}(m::Monetary{T,U,V}, n::Monetary{T,U,V}) = isless(m.val, n.val
 # arithmetic operations on monetary and dimensionless values
 *{T<:Monetary}(m::T, i::Integer) = T(m.val * i)
 *{T<:Monetary}(i::Integer, m::T) = T(i * m.val)
-*{T,U,V}(f::Real, m::Monetary{T,U,V}) = Monetary{T,U,V}(round(U, f * m.val))
-*{T,U,V}(m::Monetary{T,U,V}, f::Real) = Monetary{T,U,V}(round(U, m.val * f))
+*{T,U,V}(f::Real, m::Monetary{T,U,V}) = Monetary{T,U,V}(f * m.val)
+*{T,U,V}(m::Monetary{T,U,V}, f::Real) = Monetary{T,U,V}(m.val * f)
 m::Monetary / f::Real = m * inv(f)
 
 # Note that quotient is an integer, but remainder is a monetary value.
