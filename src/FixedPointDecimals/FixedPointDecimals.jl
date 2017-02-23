@@ -194,7 +194,14 @@ function show{T, f}(io::IO, x::FD{T, f})
     if !iscompact
         print(io, FD{T, f}, '(')
     end
-    print(io, integer, '.', lpad(abs(fractional), f, "0"))
+    fractionchars = lpad(abs(fractional), f, "0")
+    if iscompact
+        fractionchars = rstrip(fractionchars, '0')
+        if isempty(fractionchars)
+            fractionchars = "0"
+        end
+    end
+    print(io, integer, '.', fractionchars)
     if !iscompact
         print(io, ')')
     end

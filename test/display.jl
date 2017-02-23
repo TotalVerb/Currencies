@@ -25,7 +25,7 @@
     # with compact IOContext
     buf = IOBuffer()
     show(IOContext(buf, :compact => true), "text/plain", 1USD)
-    @test String(take!(buf)) == "1.00USD"
+    @test String(take!(buf)) == "1.0USD"
 end
 
 @testset "text/latex" begin
@@ -45,7 +45,7 @@ end
 end
 
 @testset "print & show" begin
-    @test string(USD) == "1.00USD"
+    @test string(USD) == "1.0USD"
     @test string(0.01USD) == "0.01USD"
     @test string(20JPY) == "20JPY"
 
@@ -53,7 +53,7 @@ end
     basketstr = string(Basket([USD, 20CAD, -10JPY]))
     @test contains(basketstr, "Basket([")
     @test contains(basketstr, "-10JPY")
-    @test contains(basketstr, "20.00CAD")
+    @test contains(basketstr, "20.0CAD")
 
     # test compatibility between show & print
     @test sprint(show, 0.02USD) == string(0.02USD)
