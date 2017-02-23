@@ -90,8 +90,8 @@ end
 
 # these functions are needed to avoid InexactError when converting from the
 # integer type
-*{T, f}(x::Integer, y::FD{T, f}) = FD{T, f}(x * y.i)
-*{T, f}(x::FD{T, f}, y::Integer) = FD{T, f}(x.i * y)
+*{T, f}(x::Integer, y::FD{T, f}) = FD{T, f}(T(x * y.i), nothing)
+*{T, f}(x::FD{T, f}, y::Integer) = FD{T, f}(T(x.i * y), nothing)
 
 # TODO. this is probably wrong sometimes.
 /{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i / y.i)
