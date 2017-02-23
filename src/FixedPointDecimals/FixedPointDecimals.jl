@@ -88,6 +88,11 @@ function *{T, f}(x::FD{T, f}, y::FD{T, f})
     FD{T, f}(_round_to_even(quotient, remainder, powt), nothing)
 end
 
+# these functions are needed to avoid InexactError when converting from the
+# integer type
+*{T, f}(x::Integer, y::FD{T, f}) = FD{T, f}(x * y.i)
+*{T, f}(x::FD{T, f}, y::Integer) = FD{T, f}(x.i * y)
+
 # TODO. this is probably wrong sometimes.
 /{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i / y.i)
 
