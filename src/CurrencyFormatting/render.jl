@@ -86,7 +86,7 @@ function render(template::Vector, spec::FormatSpecification, m::Monetary)
 
     prec = decimals(m)
     intpart = trunc(Int, abs(m.val))
-    floatpart = round(Int, 10^prec * (abs(m.val) - intpart))
+    floatpart = round(Int, big(10)^prec * (abs(m.val) - intpart))
 
     syms = getsymboltable(spec)
     next_template = []
