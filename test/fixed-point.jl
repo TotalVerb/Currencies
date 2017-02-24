@@ -1,4 +1,9 @@
+const SFD2 = FixedDecimal{Int16, 2}
+const SFD4 = FixedDecimal{Int16, 4}
 const FD2 = FixedDecimal{Int, 2}
+const FD4 = FixedDecimal{Int, 4}
+const WFD2 = FixedDecimal{Int128, 2}
+const WFD4 = FixedDecimal{Int128, 4}
 
 const keyvalues = [typemin(FD2),
                    FD2(-0.01),
@@ -6,6 +11,19 @@ const keyvalues = [typemin(FD2),
                    FD2(0.01),
                    FD2(1),
                    typemax(FD2)]
+
+@testset "conversion" begin
+    @testset for x in keyvalues
+        @testset for T in [Rational{Int128}, WFD2, WFD4]
+            @test convert(FD2, convert(T, x)) == x
+        end
+        if 0 ≤ abs(x) < 100
+            @testset for T in [SFD2, SFD4, FD4]
+                @test convert(FD2, convert(T, x)) == x
+            end
+        end
+    end
+end
 
 @testset "comparison" begin
     for (i, x) in enumerate(keyvalues)
@@ -67,17 +85,25 @@ end
     end
 end
 
+@testset "division by 1" begin
+    @testset for x in keyvalues
+        @test x / one(x) == x
+        @test x / -one(x) == -x
+    end
+end
+
 @testset "division by 2" begin
     # even targets
     for x in FD2[-0.02, 0, 0.02, 1.00]
         for y in [2x-eps(x), 2x, 2x+eps(x)]
-            @test y / 2 == y / 2one(y) == x
+            @test y / 2 == y / 2one(y) == x == y * FD2(0.5)
         end
     end
 
     # odd targets
     for x in FD2[-0.01, 0.01, 1.01]
-        @test 2x / 2 == 2x / 2one(x) == x
+        y = 2x
+        @test y / 2 == y / 2one(x) == x == y * FD2(0.5)
     end
 end
 
@@ -106,4 +132,29 @@ end
     @test trunc(Int, typemin(FD2)) ≥ typemin(FD2)
     @test trunc(eps(FD2)) == 0
     @test trunc(-eps(FD2)) == 0
+end
+
+@testset "show" begin
+    @testset "compact" begin
+        @test sprint(showcompact, FD2(1.00)) == "1.0"
+        @test sprint(showcompact, FD2(1.23)) == "1.23"
+        @test sprint(showcompact, FD2(42.40)) == "42.4"
+        @test sprint(showcompact, FD2(-42.40)) == "-42.4"
+        @test sprint(showcompact, FD2(-0.01)) == "-0.01"
+        @test sprint(showcompact, FD2(0)) == "0.0"
+        for x in keyvalues
+            if 0 ≤ abs(x) < 1000
+                @test eval(parse(string(x))) == x
+            end
+        end
+
+        @test string(typemin(FixedDecimal{Int64, 2})) ==
+              "FixedDecimal{Int64,2}(-92233720368547758.08)"
+        @test string(typemax(FixedDecimal{Int64, 2})) ==
+              "FixedDecimal{Int64,2}(92233720368547758.07)"
+        @test string(typemin(FixedDecimal{Int32, 2})) ==
+              "FixedDecimal{Int32,2}(-21474836.48)"
+        @test string(typemax(FixedDecimal{Int32, 2})) ==
+              "FixedDecimal{Int32,2}(21474836.47)"
+    end
 end

@@ -89,7 +89,11 @@ end
 *{T, f}(x::FD{T, f}, y::Integer) = reinterpret(FD{T, f}, T(x.i * y))
 
 # TODO. this is probably wrong sometimes.
-/{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i / y.i)
+function /{T, f}(x::FD{T, f}, y::FD{T, f})
+    powt = T(10)^f
+    quotient, remainder = divrem(x.i, y.i)
+    reinterpret(FD{T, f}, quotient * powt + round(T, remainder / y.i * powt))
+end
 
 # integerification
 trunc{T, f}(x::FD{T, f}) = FD{T, f}(div(x.i, T(10)^f))
@@ -121,8 +125,15 @@ convert{T, f}(::Type{FD{T, f}}, x::Integer) =
 # TODO. this is very, very incorrect.
 convert{T, f}(::Type{FD{T, f}}, x::AbstractFloat) =
     reinterpret(FD{T, f}, round(T, T(10)^f * x))
-convert{T, f}(::Type{FD{T, f}}, x::Rational) =
-    FD{T, f}(numerator(x)) / FD{T, f}(denominator(x))
+function convert{T, f}(::Type{FD{T, f}}, x::Rational)::FD{T, f}
+    powt = T(10)^f
+    num::T, den::T = numerator(x), denominator(x)
+    g = gcd(powt, den)
+    powt = div(powt, g)
+    den = div(den, g)
+    reinterpret(FD{T, f}, powt * num) / FD{T, f}(den)
+end
+
 function convert{T, f, U, g}(::Type{FD{T, f}}, x::FD{U, g})
     if f ≥ g
         reinterpret(FD{T, f}, convert(T, Base.widemul(T(10)^(f-g), x.i)))
@@ -132,7 +143,7 @@ function convert{T, f, U, g}(::Type{FD{T, f}}, x::FD{U, g})
         if r ≠ 0
             throw(InexactError())
         else
-            FD{T, f}(convert(T, q))
+            reinterpret(FD{T, f}, convert(T, q))
         end
     end
 end
@@ -143,10 +154,6 @@ end
 for divfn in [:div, :fld, :fld1]
     @eval $divfn{T <: FD}(x::T, y::T) = $divfn(x.i, y.i)
 end
-
-# TODO.
-# rem{T, f}(x::Integer, ::Type{FD{T, f}}) = error("not implemented")
-# rem{T, f}(x::Real, ::Type{FD{T, f}}) = error("not implemented")
 
 float(x::FD) = convert(floattype(x), x)
 
@@ -176,16 +183,16 @@ promote_rule{T, f, TR}(::Type{FD{T, f}}, ::Type{Rational{TR}}) = Rational{TR}
 isinteger{T, f}(x::FD{T, f}) = rem(x.i, T(10)^f) == 0
 typemin{T, f}(::Type{FD{T, f}}) = reinterpret(FD{T, f}, typemin(T))
 typemax{T, f}(::Type{FD{T, f}}) = reinterpret(FD{T, f}, typemax(T))
-realmin{T <: FD}(::Type{T}) = typemin(T)
-realmax{T <: FD}(::Type{T}) = typemax(T)
 eps{T <: FD}(::Type{T}) = reinterpret(T, 1)
 eps(x::FD) = eps(typeof(x))
+realmin{T <: FD}(::Type{T}) = eps(T)
+realmax{T <: FD}(::Type{T}) = typemax(T)
 
 # printing
 function show{T}(io::IO, x::FD{T, 0})
     iscompact = get(io, :compact, false)
     if !iscompact
-        print(io, FD{T, f}, '(')
+        print(io, "FixedDecimal{$T,0}(")
     end
     print(io, x.i)
     if !iscompact
@@ -194,9 +201,18 @@ function show{T}(io::IO, x::FD{T, 0})
 end
 function show{T, f}(io::IO, x::FD{T, f})
     iscompact = get(io, :compact, false)
-    integer, fractional = divrem(x.i, T(10)^f)
+
+    # note: a is negative if x.i == typemin(x.i)
+    s, a = sign(x.i), abs(x.i)
+    integer, fractional = divrem(a, T(10)^f)
+    integer = abs(integer)  # ...but since f > 0, this is positive
+    fractional = abs(fractional)
+
     if !iscompact
-        print(io, FD{T, f}, '(')
+        print(io, "FixedDecimal{$T,$f}(")
+    end
+    if s == -1
+        print(io, "-")
     end
     fractionchars = lpad(abs(fractional), f, "0")
     if iscompact
