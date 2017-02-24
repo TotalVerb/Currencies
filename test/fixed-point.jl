@@ -29,6 +29,12 @@ const keyvalues = [typemin(FD2),
     @test_throws InexactError convert(SFD2, typemax(FD2))
 end
 
+@testset "promotion" begin
+    @test 1//10 + FD2(0.1) === 1//5
+    @test 0.1 + FD2(0.1) === 0.2
+    @test 1 + FD2(0.1) === FD2(1.1)
+end
+
 @testset "float" begin
     @test float(-one(SFD2)) === -1.0f0
     @test float(zero(SFD2)) === 0.0f0

@@ -159,8 +159,6 @@ convert(::Type{AbstractFloat}, x::FD) = convert(floattype(typeof(x)), x)
 convert{TF <: AbstractFloat, T, f}(::Type{TF}, x::FD{T, f})::TF =
     x.i / TF(10)^f
 
-convert{T, f}(::Type{Bool}, x::FD{T, f}) = x.i ≠ 0
-
 function convert{TI <: Integer, T, f}(::Type{TI}, x::FD{T, f})::TI
     isinteger(x) || throw(InexactError())
     div(x.i, T(10)^f)
