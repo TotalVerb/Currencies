@@ -30,7 +30,7 @@ using Compat
 import Base: reinterpret, zero, one, abs, sign, ==, <, <=, +, -, /, *, div,
              rem, divrem, fld, mod, fldmod, fld1, mod1, fldmod1, isinteger,
              typemin, typemax, realmin, realmax, show, convert, promote_rule,
-             min, max, trunc, round, floor, ceil
+             min, max, trunc, round, floor, ceil, eps
 
 """
     FixedDecimal{I <: Integer, f::Int}
@@ -183,6 +183,8 @@ typemin{T, f}(::Type{FD{T, f}}) = FD{T, f}(typemin(T), nothing)
 typemax{T, f}(::Type{FD{T, f}}) = FD{T, f}(typemax(T), nothing)
 realmin{T <: FD}(::Type{T}) = typemin(T)
 realmax{T <: FD}(::Type{T}) = typemax(T)
+eps{T <: FD}(::Type{T}) = T(1, nothing)
+eps(x::FD) = eps(typeof(x))
 
 # printing
 function show{T}(io::IO, x::FD{T, 0})
