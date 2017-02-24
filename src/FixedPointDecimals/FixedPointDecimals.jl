@@ -30,7 +30,7 @@ using Compat
 import Base: reinterpret, zero, one, abs, sign, ==, <, <=, +, -, /, *, div,
              rem, divrem, fld, mod, fldmod, fld1, mod1, fldmod1, isinteger,
              typemin, typemax, realmin, realmax, show, convert, promote_rule,
-             min, max, trunc, round, floor, ceil, eps
+             min, max, trunc, round, floor, ceil, eps, float
 
 """
     FixedDecimal{I <: Integer, f::Int}
@@ -48,7 +48,7 @@ end
 
 const FD = FixedDecimal
 
-floattype{T<:Union{Int8, UInt8, Int16, UInt16}, f}(::Type{FD{T, f}}) = Float64
+floattype{T<:Union{Int8, UInt8, Int16, UInt16}, f}(::Type{FD{T, f}}) = Float32
 floattype{T<:Integer, f}(::Type{FD{T, f}}) = Float64
 floattype{f}(::Type{FD{BigInt, f}}) = BigFloat
 
@@ -155,8 +155,7 @@ for divfn in [:div, :fld, :fld1]
     @eval $divfn{T <: FD}(x::T, y::T) = $divfn(x.i, y.i)
 end
 
-float(x::FD) = convert(floattype(x), x)
-
+convert(::Type{AbstractFloat}, x::FD) = convert(floattype(typeof(x)), x)
 convert{TF <: AbstractFloat, T, f}(::Type{TF}, x::FD{T, f})::TF =
     x.i / TF(10)^f
 

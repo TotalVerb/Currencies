@@ -17,12 +17,21 @@ const keyvalues = [typemin(FD2),
         @testset for T in [Rational{Int128}, WFD2, WFD4]
             @test convert(FD2, convert(T, x)) == x
         end
-        if 0 ≤ abs(x) < 100
+        if 0 ≤ abs(x) < 2
             @testset for T in [SFD2, SFD4, FD4]
                 @test convert(FD2, convert(T, x)) == x
             end
         end
     end
+end
+
+@testset "float" begin
+    @test float(-one(SFD2)) === -1.0f0
+    @test float(zero(SFD2)) === 0.0f0
+    @test float(one(SFD2)) === 1.0f0
+    @test float(-one(FD2)) === -1.0
+    @test float(zero(FD2)) === 0.0
+    @test float(one(FD2)) === 1.0
 end
 
 @testset "comparison" begin
@@ -63,6 +72,9 @@ end
     @test FD2(0) + FD2(0) == FD2(0)
     @test FD2(1.11) + FD2(2.22) == FD2(3.33)
     @test FD2(0.01) + FD2(0.01) == FD2(0.02)
+    @test FD2(0.01) + FD2(-0.01) == FD2(0)
+
+    # overflow
     @test typemax(FD2) + eps(FD2) == typemin(FD2)
 end
 
@@ -105,6 +117,23 @@ end
         y = 2x
         @test y / 2 == y / 2one(x) == x == y * FD2(0.5)
     end
+
+    # big numbers
+    for T in [SFD2, SFD4, FD2, FD4, WFD2, WFD4]
+        @test typemin(T) / 2 * 2 == typemin(T)
+        @test (typemax(T) / 2 - eps(T)) * 2 == typemax(T) - eps(T)
+    end
+end
+
+@testset "division by 3" begin
+    @test FD2(10) / 3 == FD2(3.33)
+    @test FD2(20) / 3 == FD2(6.67)
+    @test FD2(-1.50) / 3 == FD2(-0.50)
+    @test FD2(-20) / 3 == FD2(-6.67)
+
+    # should work with big numbers
+    @test typemin(FD2) / 3 < 0
+    @test typemax(FD2) / 3 > 0
 end
 
 @testset "abs, sign" begin
