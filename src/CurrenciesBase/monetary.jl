@@ -44,7 +44,7 @@ immutable Monetary{T, U, V} <: AbstractMonetary
 
     # TODO: deprecate this constructor
     (::Type{Monetary{T, U, V}}){T,U,V}(x::Integer) =
-        new{T,U,V}(FixedDecimal{U,V}(U(x), nothing))
+        new{T,U,V}(reinterpret(FixedDecimal{U,V}, x))
     (::Type{Monetary{T, U, V}}){T,U,V}(x::Real) =
         new{T,U,V}(FixedDecimal{U,V}(x))
 end

@@ -41,12 +41,9 @@ the decimal point stored.
 immutable FixedDecimal{T <: Integer, f} <: Real
     i::T
 
-    # internal constructor, à la FixedPointNumbers.jl
-    (::Type{FixedDecimal{T, f}}){T, f}(i::Integer, ::Void) =
+    # internal constructor
+    Base.reinterpret{T, f}(::Type{FixedDecimal{T, f}}, i::Integer) =
         new{T, f}(i % T)
-
-    # external constructor
-    (::Type{FixedDecimal{T, f}}){T, f}(x) = convert(FixedDecimal{T,f}, x)
 end
 
 const FD = FixedDecimal
@@ -55,14 +52,12 @@ floattype{T<:Union{Int8, UInt8, Int16, UInt16}, f}(::Type{FD{T, f}}) = Float64
 floattype{T<:Integer, f}(::Type{FD{T, f}}) = Float64
 floattype{f}(::Type{FD{BigInt, f}}) = BigFloat
 
-reinterpret{T<:Integer, f}(::Type{FD{T, f}}, x::T) = FD{T, f}(x, nothing)
-
 # basic operators
--{T, f}(x::FD{T, f}) = FD{T, f}(-x.i, nothing)
-abs{T, f}(x::FD{T, f}) = FD{T, f}(abs(x.i), nothing)
+-{T, f}(x::FD{T, f}) = reinterpret(FD{T, f}, -x.i)
+abs{T, f}(x::FD{T, f}) = reinterpret(FD{T, f}, abs(x.i))
 
-+{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i+y.i, nothing)
--{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i-y.i, nothing)
++{T, f}(x::FD{T, f}, y::FD{T, f}) = reinterpret(FD{T, f}, x.i+y.i)
+-{T, f}(x::FD{T, f}, y::FD{T, f}) = reinterpret(FD{T, f}, x.i-y.i)
 
 function _round_to_even(quotient, remainder, powt)
     if powt == 1
@@ -85,13 +80,13 @@ end
 function *{T, f}(x::FD{T, f}, y::FD{T, f})
     powt = T(10)^f
     quotient, remainder = fldmod(Base.widemul(x.i, y.i), powt)
-    FD{T, f}(_round_to_even(quotient, remainder, powt), nothing)
+    reinterpret(FD{T, f}, _round_to_even(quotient, remainder, powt))
 end
 
 # these functions are needed to avoid InexactError when converting from the
 # integer type
-*{T, f}(x::Integer, y::FD{T, f}) = FD{T, f}(T(x * y.i), nothing)
-*{T, f}(x::FD{T, f}, y::Integer) = FD{T, f}(T(x.i * y), nothing)
+*{T, f}(x::Integer, y::FD{T, f}) = reinterpret(FD{T, f}, T(x * y.i))
+*{T, f}(x::FD{T, f}, y::Integer) = reinterpret(FD{T, f}, T(x.i * y))
 
 # TODO. this is probably wrong sometimes.
 /{T, f}(x::FD{T, f}, y::FD{T, f}) = FD{T, f}(x.i / y.i)
@@ -121,16 +116,16 @@ end
 
 # conversions and promotions
 convert{T, f}(::Type{FD{T, f}}, x::Integer) =
-    FD{T, f}(round(T, Base.widemul(T(x), T(10)^f)), nothing)
+    reinterpret(FD{T, f}, round(T, Base.widemul(T(x), T(10)^f)))
 
 # TODO. this is very, very incorrect.
 convert{T, f}(::Type{FD{T, f}}, x::AbstractFloat) =
-    FD{T, f}(round(T, T(10)^f * x), nothing)
+    reinterpret(FD{T, f}, round(T, T(10)^f * x))
 convert{T, f}(::Type{FD{T, f}}, x::Rational) =
     FD{T, f}(numerator(x)) / FD{T, f}(denominator(x))
 function convert{T, f, U, g}(::Type{FD{T, f}}, x::FD{U, g})
     if f ≥ g
-        FD{T, f}(convert(T, Base.widemul(T(10)^(f-g), x.i)), nothing)
+        reinterpret(FD{T, f}, convert(T, Base.widemul(T(10)^(f-g), x.i)))
     else
         sf = T(10)^(g - f)
         q, r = divrem(x.i, sf)
@@ -143,7 +138,7 @@ function convert{T, f, U, g}(::Type{FD{T, f}}, x::FD{U, g})
 end
 
 for remfn in [:rem, :mod, :mod1, :min, :max]
-    @eval $remfn{T <: FD}(x::T, y::T) = T($remfn(x.i, y.i), nothing)
+    @eval $remfn{T <: FD}(x::T, y::T) = reinterpret(T, $remfn(x.i, y.i))
 end
 for divfn in [:div, :fld, :fld1]
     @eval $divfn{T <: FD}(x::T, y::T) = $divfn(x.i, y.i)
@@ -179,11 +174,11 @@ promote_rule{T, f, TR}(::Type{FD{T, f}}, ::Type{Rational{TR}}) = Rational{TR}
 
 # predicates and traits
 isinteger{T, f}(x::FD{T, f}) = rem(x.i, T(10)^f) == 0
-typemin{T, f}(::Type{FD{T, f}}) = FD{T, f}(typemin(T), nothing)
-typemax{T, f}(::Type{FD{T, f}}) = FD{T, f}(typemax(T), nothing)
+typemin{T, f}(::Type{FD{T, f}}) = reinterpret(FD{T, f}, typemin(T))
+typemax{T, f}(::Type{FD{T, f}}) = reinterpret(FD{T, f}, typemax(T))
 realmin{T <: FD}(::Type{T}) = typemin(T)
 realmax{T <: FD}(::Type{T}) = typemax(T)
-eps{T <: FD}(::Type{T}) = T(1, nothing)
+eps{T <: FD}(::Type{T}) = reinterpret(T, 1)
 eps(x::FD) = eps(typeof(x))
 
 # printing
