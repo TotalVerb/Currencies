@@ -23,6 +23,10 @@ const keyvalues = [typemin(FD2),
             end
         end
     end
+
+    @test_throws InexactError convert(FD2, FD4(0.0001))
+    @test_throws InexactError convert(FD4, typemax(FD2))
+    @test_throws InexactError convert(SFD2, typemax(FD2))
 end
 
 @testset "float" begin
@@ -55,8 +59,8 @@ end
     @test FD2(42.42) * FD2(1) == FD2(42.42)
 end
 
-@testset "eps" begin
-    @test eps(FD2) == FD2(0.01)
+@testset "eps, realmin, realmax" begin
+    @test realmin(FD2) == eps(FD2) == FD2(0.01)
     @test eps(FD2(1.11)) == FD2(0.01)
     for x in keyvalues
         if x ≠ typemax(FD2)
@@ -64,6 +68,9 @@ end
         end
         if x ≠ typemin(FD2)
             @test x - eps(x) < x
+            if x ≠ 0
+                @test realmin(FD2) ≤ abs(x) ≤ realmax(FD2)
+            end
         end
     end
 end
@@ -89,11 +96,21 @@ end
 end
 
 @testset "multiplication" begin
-    for x in keyvalues
-        @test 1 * x == x * 1 == x
-        @test one(x) * x == x * one(x) == x
-        @test (-1) * x == x * (-1) == -x
-        @test 2 * x == x + x == (one(x) + one(x)) * x
+    @testset "with integer" begin
+        for x in keyvalues
+            @test 1 * x == x * 1 == x
+            @test one(x) * x == x * one(x) == x
+            @test (-1) * x == x * (-1) == -x
+            @test 2 * x == x + x == (one(x) + one(x)) * x
+        end
+    end
+
+    @testset "binary" begin
+        @test FD2(0.33) * FD2(1.00) == FD2(0.33)
+        @test FD2(0.33) * FD2(3.00) == FD2(0.99)
+        @test FD2(0.33) * FD2(0.50) == FD2(0.16)
+        @test FD2(0.33) * FD2(0.33) == FD2(0.11)
+        @test FD2(0.67) * FD2(0.67) == FD2(0.45)
     end
 end
 
@@ -161,6 +178,17 @@ end
     @test trunc(Int, typemin(FD2)) ≥ typemin(FD2)
     @test trunc(eps(FD2)) == 0
     @test trunc(-eps(FD2)) == 0
+end
+
+@testset "floor, ceil" begin
+    @testset for x in keyvalues
+        if 0 ≤ abs(x) < 1000
+            @test floor(x) ≤ x < floor(x) + 1
+            @test ceil(x) - 1 < x ≤ ceil(x)
+            @test isinteger(floor(x))
+            @test isinteger(ceil(x))
+        end
+    end
 end
 
 @testset "show" begin
