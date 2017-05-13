@@ -346,13 +346,13 @@ epsi{T}(::Type{T}) = eps(T)
 end
 
 @testset "print" begin
-    @test sprint(print, FD2(1.00)) == "1.00"
-    @test sprint(print, FD2(1.23)) == "1.23"
-    @test sprint(print, FD2(42.40)) == "42.40"
-    @test sprint(print, FD2(-42.40)) == "-42.40"
-    @test sprint(print, FD2(-0.01)) == "-0.01"
-    @test sprint(print, FD2(0)) == "0.00"
-    @test sprint(print, FixedDecimal{Int,0}(123.4)) == "123"
+    @test string(FD2(1.00)) == "1.00"
+    @test string(FD2(1.23)) == "1.23"
+    @test string(FD2(42.40)) == "42.40"
+    @test string(FD2(-42.40)) == "-42.40"
+    @test string(FD2(-0.01)) == "-0.01"
+    @test string(FD2(0)) == "0.00"
+    @test string(FixedDecimal{Int,0}(123.4)) == "123"
 end
 
 @testset "show" begin
@@ -364,13 +364,13 @@ end
         @test sprint(showcompact, FD2(-0.01)) == "-0.01"
         @test sprint(showcompact, FD2(0)) == "0.0"
 
-        @test sprint(show, typemin(FixedDecimal{Int64, 2})) ==
+        @test repr(typemin(FixedDecimal{Int64, 2})) ==
               "FixedDecimal{Int64,2}(-92233720368547758.08)"
-        @test sprint(show, typemax(FixedDecimal{Int64, 2})) ==
+        @test repr(typemax(FixedDecimal{Int64, 2})) ==
               "FixedDecimal{Int64,2}(92233720368547758.07)"
-        @test sprint(show, typemin(FixedDecimal{Int32, 2})) ==
+        @test repr(typemin(FixedDecimal{Int32, 2})) ==
               "FixedDecimal{Int32,2}(-21474836.48)"
-        @test sprint(show, typemax(FixedDecimal{Int32, 2})) ==
+        @test repr(typemax(FixedDecimal{Int32, 2})) ==
               "FixedDecimal{Int32,2}(21474836.47)"
     end
 end

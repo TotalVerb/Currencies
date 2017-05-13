@@ -259,6 +259,4 @@ function show{T, f}(io::IO, x::FD{T, f})
     end
 end
 
-string(x::FD) = sprint(show, x)
-
 end
