@@ -47,19 +47,19 @@ for fn in [:trunc, :floor, :ceil]
         incorrect.
         """ function $fnname end
 
-        $fnname(x::T, y::T) where T <: Number = $fn(x * y)
+        $fnname{T <: Number}(x::T, y::T) = $fn(x * y)
 
         $fnname(x::Number, y::Number) = $fnname(promote(x, y)...)
     end
 
     if fn === :trunc
         # trunc a little different, implement in terms of floor
-        @eval function $fnname(x::T, y::T) where T <: IEEEFloat
+        @eval function $fnname{T <: IEEEFloat}(x::T, y::T)
             copysign(floormul(abs(x), abs(y)), x*y)
         end
     else
         # floor and ceil can be implemented the same way
-        @eval function $fnname(x::T, y::T) where T <: IEEEFloat
+        @eval function $fnname{T <: IEEEFloat}(x::T, y::T)
             a = x * y
             b = fma(x, y, -a)
             ifelse(isinteger(a), a + $fn(b), $fn(a))
