@@ -32,7 +32,7 @@ import Base: reinterpret, zero, one, abs, sign, ==, <, <=, +, -, /, *, div,
              typemin, typemax, realmin, realmax, print, show, string, convert,
              promote_rule, min, max, trunc, round, floor, ceil, eps, float, widemul
 
-using Base.Math: IEEEFloat
+const IEEEFloat = Union{Float16, Float32, Float64}
 
 for fn in [:trunc, :floor, :ceil]
     fnname = Symbol(fn, "mul")
