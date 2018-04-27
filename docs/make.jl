@@ -10,6 +10,7 @@ makedocs(
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
 deploydocs(
+    julia = "nightly",
     deps = Deps.pip(
             "pygments",
             "mkdocs",
