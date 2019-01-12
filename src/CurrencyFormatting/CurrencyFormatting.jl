@@ -12,10 +12,6 @@ include("decimals.jl")
 include("templates.jl")
 include("render.jl")
 
-# Single-line output in two-argument `show`
-Base.show(io::IO, m::Monetary) =
-        show(IOContext(io, :compact => true), "text/plain", m)
-
 function Base.show(io::IO, b::Basket)
     write(io, "$(typeof(b))([")
     write(io, join([sprint(show, c; context=:compact => true) for c in b], ","))

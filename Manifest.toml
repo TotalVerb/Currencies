@@ -15,8 +15,8 @@ version = "1.4.0"
 
 [[CurrenciesBase]]
 deps = ["Dates", "FixedPointDecimals", "Test"]
-path = "C:\\Users\\Eric\\.julia\\dev\\CurrenciesBase"
-uuid = "61d3cba0-166c-11e9-0110-970803dc7c71"
+git-tree-sha1 = "822c93db371991f30c0005b8ce879d70db8fa838"
+uuid = "a33ca353-0707-5c2b-b398-646075a850cd"
 version = "0.1.0"
 
 [[Dates]]
