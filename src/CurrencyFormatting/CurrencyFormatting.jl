@@ -2,7 +2,6 @@ module CurrencyFormatting
 
 using ..Baskets
 using ..CurrenciesBase
-using ..CurrencyData
 using ..DeclarativeFormatting
 import ..DeclarativeFormatting: conflict, reconcile
 
