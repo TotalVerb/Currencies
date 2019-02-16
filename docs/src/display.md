@@ -7,7 +7,7 @@ compact. (Note that this behaviour is retained for compatibility and will likely
 change in the future.)
 
 ```@repl disp
-using Currencies  # hide
+using CurrencyBaskets  # hide
 @usingcurrencies USD  # hide
 show(100USD)
 ```

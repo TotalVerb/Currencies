@@ -10,7 +10,7 @@ present in the basket into the desired basis currency. An example would explain
 it better than any words:
 
 ```@repl
-using Currencies  # hide
+using CurrencyBaskets  # hide
 @usingcurrencies USD, JPY, EUR;
 usdmoney = 100USD;
 mybasket = Basket([100USD, 100JPY, 100EUR]);

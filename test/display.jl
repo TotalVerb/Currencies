@@ -64,10 +64,10 @@ end  # testset output
 
 @testset "format" begin
     # internals
-    @test Currencies.CurrencyFormatting.digitseparate(20160408, "'", (3, 3)) == "20'160'408"
-    @test Currencies.CurrencyFormatting.digitseparate(12345678, " ", (3, 3)) == "12 345 678"
-    @test Currencies.CurrencyFormatting.digitseparate(1, ",", (3, 3)) == "1"
-    @test Currencies.CurrencyFormatting.digitseparate(12345678, ",", (3, 2)) == "1,23,45,678"
+    @test CurrencyBaskets.CurrencyFormatting.digitseparate(20160408, "'", (3, 3)) == "20'160'408"
+    @test CurrencyBaskets.CurrencyFormatting.digitseparate(12345678, " ", (3, 3)) == "12 345 678"
+    @test CurrencyBaskets.CurrencyFormatting.digitseparate(1, ",", (3, 3)) == "1"
+    @test CurrencyBaskets.CurrencyFormatting.digitseparate(12345678, ",", (3, 2)) == "1,23,45,678"
 
     # default (finance) style
     @test format(100USD) == "100.00 USD"
@@ -140,7 +140,7 @@ end  # testset output
     end
 
     # can't combine US & european
-    @test_throws Currencies.DeclarativeFormatting.IncompatibleFormatException format(
+    @test_throws CurrencyBaskets.DeclarativeFormatting.IncompatibleFormatException format(
         USD, styles=[:us, :european])
 
     # big numbers

@@ -70,7 +70,7 @@ precision is necessary. The precision (the number of decimal points after the
 major currency unit) can be controlled as a third type parameter to `Monetary`:
 
 ```@repl mixed
-using Currencies  # hide
+using CurrencyBaskets  # hide
 USD_M = Monetary{:USD, Int, 3}(1000)
 julia> 10USD_M + 11.004USD_M
 ```
@@ -103,7 +103,7 @@ these currencies, the precision must be provided manually:
 ```julia
 julia> @usingcurrencies XAU
 ERROR: ArgumentError: Must provide precision for currency XAU.
- in Monetary at ~/.julia/v0.5/Currencies/src/monetary.jl:47
+ in Monetary at ~/.julia/v0.5/CurrencyBaskets/src/monetary.jl:47
  in eval at ./boot.jl:263
 
 julia> const XAU = Monetary(:XAU; precision=4)

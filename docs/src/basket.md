@@ -4,7 +4,7 @@ The `Basket` type is similar to a multiset or bag. The most convenient
 constructor takes a list of `Monetary` or other `Basket` values:
 
 ```@repl basket
-using Currencies  # hide
+using CurrencyBaskets  # hide
 @usingcurrencies USD, CAD
 Basket([10USD, 2CAD])
 ```

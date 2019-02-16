@@ -1,6 +1,6 @@
 __precompile__()
 
-module Currencies
+module CurrencyBaskets
 
 using CurrenciesBase
 
@@ -14,7 +14,7 @@ export simplefv, compoundfv
 export newcurrency!, @usingcustomcurrency
 export format
 
-# DeclarativeFormatting (not specific to Currencies; under development)
+# DeclarativeFormatting (not specific to CurrencyBaskets; under development)
 include("DeclarativeFormatting/DeclarativeFormatting.jl")
 
 include("Baskets/Basket.jl")

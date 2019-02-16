@@ -3,17 +3,17 @@
 ## Core Features
 
 ```@autodocs
-Modules = [Currencies.CurrenciesBase]
+Modules = [CurrencyBaskets.CurrenciesBase]
 ```
 
 ## Formatting
 
 ```@autodocs
-Modules = [Currencies.CurrencyFormatting]
+Modules = [CurrencyBaskets.CurrencyFormatting]
 ```
 
 ## Valuation
 
 ```@autodocs
-Modules = [Currencies.Valuation]
+Modules = [CurrencyBaskets.Valuation]
 ```
