@@ -11,7 +11,7 @@ indirection from the equivalent operation on integers:
 ```julia
 julia> code_native(+, (typeof(USD), typeof(USD)))
   .text
-Filename: ~/.julia/v0.5/Currencies/src/monetary.jl
+Filename: ~/.julia/v0.5/CurrencyBaskets/src/monetary.jl
 Source line: 64
     pushq   %rbp
     movq    %rsp, %rbp

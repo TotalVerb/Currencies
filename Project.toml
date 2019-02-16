@@ -1,10 +1,11 @@
-name = "Currencies"
-uuid = "7c0750f0-1680-11e9-0151-4dee51660760"
-authors = ["Eric Forgy <Eric.Forgy@coherentasia.com>"]
+name = "CurrencyBaskets"
+uuid = "892782f0-5b46-5b7d-bf7f-15ab8821e8d8"
+authors = ["Fengyang Wang @TotalVerb"]
 version = "0.10.0"
 
 [deps]
 CurrenciesBase = "a33ca353-0707-5c2b-b398-646075a850cd"
+DataVoyager = "5721bf48-af8e-5845-8445-c9e18126e773"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"

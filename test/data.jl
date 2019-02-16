@@ -1,6 +1,6 @@
 ## Tests relating to data integrity. ##
 
-import Currencies.CurrenciesBase: LONG_SYMBOL, ISO4217, SHORT_SYMBOL, LOCAL_SYMBOL_LOCATION
+import CurrencyBaskets.CurrenciesBase: LONG_SYMBOL, ISO4217, SHORT_SYMBOL, LOCAL_SYMBOL_LOCATION
 
 @testset "Data" begin
 

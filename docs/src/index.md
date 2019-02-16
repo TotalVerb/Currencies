@@ -1,4 +1,4 @@
-# Currencies.jl
+# CurrencyBaskets.jl
 
 This package provides a simple interface to using a wide variety of currencies
 with checked arithmetic in Julia. While floating point arithmetic is very

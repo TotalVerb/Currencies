@@ -3,13 +3,13 @@
 In Julia, execute:
 
 ```julia
-Pkg.add("Currencies")
+Pkg.add("CurrencyBaskets")
 ```
 
 Then in your project (or in the REPL), use the package with:
 
 ```julia
-using Currencies
+using CurrencyBaskets
 ```
 
 At this point you can import the currency symbols that you will need. Using the
@@ -23,7 +23,7 @@ Basic usage of this package is quite simple. For example, for a simple sum of
 `Monetary` values, we can write:
 
 ```@example
-using Currencies  # hide
+using CurrencyBaskets  # hide
 @usingcurrencies USD  # hide
 subtotal = 100USD
 tax = 10USD

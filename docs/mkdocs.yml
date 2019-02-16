@@ -1,12 +1,12 @@
 # See the mkdocs user guide for more information on these settings.
 #   http://www.mkdocs.org/user-guide/configuration/
 
-site_name:        Currencies.jl
+site_name:        CurrencyBaskets.jl
 site_description: Simple checked currencies for Julia
 site_author:      Fengyang Wang
 
 repo_name:        GitHub
-repo_url:         https://github.com/JuliaFinance/Currencies.jl
+repo_url:         https://github.com/JuliaFinance/CurrencyBaskets.jl
 
 theme: material
 
