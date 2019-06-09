@@ -18,6 +18,22 @@ struct Currency{T}
 end
 const list = Dict{Symbol,Currency}()
 
+function Currency(currency::AbstractString, currency_unit::AbstractString, currency_name::AbstractString, currency_code::AbstractString)
+    if (length(currency) == 3) & !isdefined(Currencies,Symbol(currency))
+        Currency(currency, parse(Int, currency_unit), String(currency_name), parse(Int, currency_code))
+    end
+end
+
+function Currency(currency::AbstractString, currency_unit::Int, currency_name::String, currency_code::Int)
+    @eval Currencies begin
+        $(Symbol(currency)) = Currency{Symbol($(currency))}()
+        unit(::Currency{Symbol($(currency))}) = $(currency_unit)
+        name(::Currency{Symbol($(currency))}) = $(currency_name)
+        code(::Currency{Symbol($(currency))}) = $(currency_code)
+        Base.show(io::Base.IO,::Currency{Symbol($(currency))}) = print(io,$(currency))
+    end
+end
+
 const (nrow,ncol) = size(data)
 for i in 1:nrow
     currencies = split(data[i,10],",")
@@ -25,15 +41,7 @@ for i in 1:nrow
     currency_names = split(data[i,13],",")
     currency_codes = split(string(data[i,14]),",")
     for (currency,currency_unit,currency_name,currency_code) in zip(currencies,currency_units,currency_names,currency_codes)
-        if (length(currency) == 3) & !isdefined(Currencies,Symbol(currency))
-            @eval Currencies begin
-                $(Symbol(currency)) = Currency{Symbol($(currency))}()
-                unit(::Currency{Symbol($(currency))}) = parse(Int,$(currency_unit))
-                name(::Currency{Symbol($(currency))}) = $(currency_name)
-                code(::Currency{Symbol($(currency))}) = parse(Int,$(currency_code))
-                Base.show(io::Base.IO,::Currency{Symbol($(currency))}) = print(io,$(currency))
-            end
-        end
+        Currency(currency, currency_unit, currency_name, currency_code)
     end
 end
 
