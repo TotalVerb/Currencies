@@ -1,15 +1,18 @@
 using Currencies
 using Test
 
-symbols = [:USD,:PHP,:HKD,:SGD]
-currencies = [Currency{s}() for s in symbols]
-units = [2,2,2,2]
-names = ["US Dollar","Philippine Piso","Hong Kong Dollar","Singapore Dollar"]
-codes = [840,608,344,702]
+currencies = ((:USD, 2, 840, "US Dollar"),
+              (:EUR, 2, 978, "Euro"),
+              (:JPY, 0, 392, "Yen"),
+              (:JOD, 3, 400, "Jordanian Dinar"),
+              (:CNY, 2, 156, "Yuan Renminbi"))
 
-for (currency,symbol,unit,name,code) in zip(currencies,symbols,units,names,codes)
-    @test Currencies.symbol(currency) == symbol
-    @test Currencies.unit(currency) == unit
-    @test Currencies.name(currency) == name
-    @test Currencies.code(currency) == code
+@testset "Basic currencies" begin
+    for (s, u, c, n) in currencies
+        ccy = Currency{s}()
+        @test symbol(ccy) == s
+        @test unit(ccy) == u
+        @test name(ccy) == n
+        @test code(ccy) == c
+    end
 end
