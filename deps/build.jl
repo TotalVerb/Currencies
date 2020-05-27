@@ -1,3 +1,5 @@
+import Pkg; Pkg.add("JSON3") # Just in case
+
 using JSON3
 
 const src = "https://pkgstore.datahub.io/core/country-codes/country-codes_json/data/471a2e653140ecdd7243cdcacfd66608/country-codes_json.json"
