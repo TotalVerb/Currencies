@@ -26,7 +26,7 @@ This is a singleton type, intended to be used as a label for dispatch purposes
 struct Currency{S} end
 
 Currency(symbol::Symbol, unit::Integer, code::Integer, name::AbstractString) =
-    (get!(_currencies, symbol) do ; (Currency{symbol}(), unit, code, name) ; end)[1]
+    (get!(_currency_data, symbol) do ; (Currency{symbol}(), unit, code, name) ; end)[1]
 
 include(joinpath(@__DIR__, "..", "deps", "currency-data.jl"))
 
@@ -65,7 +65,7 @@ unit(::Currency{S}) where {S} = unit(S)
 code(::Currency{S}) where {S} = code(S)
 name(::Currency{S}) where {S} = name(S)
 
-allsyms()  = keys(_currency_data)
+allsymbols()  = keys(_currency_data)
 allpairs() = pairs(_currency_data)
 
 end # module Currencies
