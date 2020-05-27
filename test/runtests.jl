@@ -21,7 +21,7 @@ end
 
 # This makes sure that the values are within expected ranges
 @testset "Validation" begin
-    @test length(_currency_data) == 155
+    @test length(_currency_data) >= 155
     for (sym, ccy) in _currency_data
         (cur, uni, cod, nam) = ccy
         @test symbol(cur) == sym

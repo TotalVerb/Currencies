@@ -65,7 +65,6 @@ unit(::Currency{S}) where {S} = unit(S)
 code(::Currency{S}) where {S} = code(S)
 name(::Currency{S}) where {S} = name(S)
 
-alldata() = _currency_data
 allsymbols()  = keys(_currency_data)
 allpairs() = pairs(_currency_data)
 
