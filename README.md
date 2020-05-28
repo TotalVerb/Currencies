@@ -16,7 +16,7 @@ It provides bare singleton types based on the standard ISO 4167 3-character alph
 Within JuliaFinance, currencies are defined in two separate packages:
 
 - [Currencies.jl](https://github.com/JuliaFinance/Currencies.jl)
-- [Instruments.jl](https://github.com/JuliaFinance/Instruments.jl)
+- [Assets.jl](https://github.com/JuliaFinance/Assets.jl)
 
 A brief explanation and motivation for each is presented below.
 
