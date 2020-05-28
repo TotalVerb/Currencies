@@ -5,7 +5,7 @@
 
 This is a core package for the JuliaFinance ecosytem. 
 
-It provides bare singleton types based on standard ISO 4167 currency codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
+It provides bare singleton types based on the standard ISO 4167 3-character alpha codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
 
 - `symbol`: The symbol of the currency.
 - `currency`: The singleton type instance for a particular currency symbol
@@ -62,12 +62,12 @@ Minor Unit: 3
 
 If all you need is a list of currencies with names, ISO 4167 codes and minor units, e.g. for building a dropdown menu in a user interface, then this lightweight package is what you want.
 
-## [Instruments.jl](https://github.com/JuliaFinance/Instruments.jl)
+## [Assets.jl](https://github.com/JuliaFinance/Assets.jl)
 
-When a currency is thought of as a financial instrument (as opposed to a mere label), we choose to refer to it as "Cash" as it would appear in a balance sheet. [Instruments.jl](https://github.com/JuliaFinance/Instruments.jl) implements a `Cash` instrument together with `Position` that allows for basic algebraic manipulations of `Cash` and other financial instrument positions, e.g.
+When a currency is thought of as an asset (as opposed to a mere label), we choose to refer to it as "Cash" as it would appear in a balance sheet. [Assets.jl](https://github.com/JuliaFinance/Assets.jl) provides a `Cash` asset together with `Position` that allows for basic algebraic manipulations of `Cash` and other financial instrument positions, e.g.
 
 ```julia
-julia> import Instruments: USD, JPY
+julia> import Assets: USD, JPY
 
 julia> 10USD
 10.00USD
@@ -82,7 +82,7 @@ julia> 10USD+10JPY
 ERROR: Can't add Positions of different Instruments USD, JPY
 ```
 
-If you need currencies as a financial instrument with corresponding currency positions, you want [Instruments.jl](https://github.com/JuliaFinance/Instruments.jl).
+If you need currency as an asset with corresponding asset positions, you want [Assets.jl](https://github.com/JuliaFinance/Assets.jl).
 
 ## Data Source
 
