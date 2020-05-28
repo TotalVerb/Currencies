@@ -7,7 +7,7 @@ This is a core package for the JuliaFinance ecosytem.
 
 It provides bare singleton types based on the standard ISO 4167 3-character alpha codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
 
-- `symbol`: The symbol of the currency.
+- `symbol`: The 3-character symbol of the currency.
 - `currency`: The singleton type instance for a particular currency symbol
 - `name`: The full name of the currency.
 - `code`: The ISO 4167 code for the currency.
