@@ -13,6 +13,17 @@ It provides bare singleton types based on standard ISO 4167 currency codes to be
 - `code`: The ISO 4167 code for the currency.
 - `unit`: The minor unit, i.e. number of decimal places, for the currency.
 
+Within JuliaFinance, currencies are defined in two separate packages:
+
+- [Currencies.jl](https://github.com/JuliaFinance/Currencies.jl)
+- [Instruments.jl](https://github.com/JuliaFinance/Instruments.jl)
+
+A brief explanation and motivation for each is presented below.
+
+## [Currencies.jl](https://github.com/JuliaFinance/Currencies.jl)
+
+As mentioned, this package defines standard currencies as primordial singleton types that can be thought of as labels.
+
 For example:
 
 ```julia
@@ -76,4 +87,3 @@ If you need currencies as a financial instrument with corresponding currency pos
 ## Data Source
 
 Data for this package was obtained from https://datahub.io/core/country-codes.
-
