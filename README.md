@@ -1,8 +1,5 @@
 # Currencies.jl
 
-[![Build Status](https://travis-ci.org/JuliaFinance/Currencies.jl.svg?branch=master)](https://travis-ci.org/JuliaFinance/Currencies.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/chnj7xc6r0deux92/branch/master?svg=true)](https://ci.appveyor.com/project/EricForgy/currencies-jl/branch/master)
-
 [pkg-url]: https://github.com/JuliaFinance/Currencies.jl.git
 
 [eval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/report.html
@@ -28,12 +25,13 @@
 
 [contrib]:    https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat
 
+[![][license-img]][license-url]
 [![contributions welcome][contrib]](https://github.com/JuliaFinance/Currencies.jl/issues)
 
 | **Info** | **Windows** | **Linux & MacOS** | **Package Evaluator** | **Coverage** |
 |:------------------:|:------------------:|:---------------------:|:-----------------:|:---------------------:|
 | [![][release]][pkg-url] [![][release-date]][pkg-url] | [![][app-s-img]][app-s-url] | [![][travis-s-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
-| [![][license-img]][license-url] | [![][app-m-img]][app-m-url] | [![][travis-m-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
+| Master | [![][app-m-img]][app-m-url] | [![][travis-m-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
 
 This is a core package for the JuliaFinance ecosytem. 
 
