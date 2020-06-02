@@ -8,6 +8,9 @@
 [release]:      https://img.shields.io/github/release/JuliaFinance/Currencies.jl.svg
 [release-date]: https://img.shields.io/github/release-date/JuliaFinance/Currencies.jl.svg
 
+[julia-url]:    https://github.com/JuliaLang/Julia
+[julia-release]:https://img.shields.io/github/release/JuliaLang/julia.svg
+
 [license-img]:  http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 [license-url]:  LICENSE.md
 [travis-url]:   https://travis-ci.org/JuliaFinance/Currencies.jl
@@ -25,12 +28,11 @@
 
 [contrib]:    https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat
 
-[![][license-img]][license-url]
-[![contributions welcome][contrib]](https://github.com/JuliaFinance/Currencies.jl/issues)
+[![][release]][pkg-url] [![][release-date]][pkg-url] [![][license-img]][license-url] [![contributions welcome][contrib]](https://github.com/JuliaFinance/Currencies.jl/issues)
 
 | **Info** | **Windows** | **Linux & MacOS** | **Package Evaluator** | **Coverage** |
 |:------------------:|:------------------:|:---------------------:|:-----------------:|:---------------------:|
-| [![][release]][pkg-url] [![][release-date]][pkg-url] | [![][app-s-img]][app-s-url] | [![][travis-s-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
+| [![][julia-release]][julia-url] | [![][app-s-img]][app-s-url] | [![][travis-s-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
 | Master | [![][app-m-img]][app-m-url] | [![][travis-m-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
 
 This is a core package for the JuliaFinance ecosytem. 
