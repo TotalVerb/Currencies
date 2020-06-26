@@ -43,7 +43,7 @@ function genfile(io)
     println(io, ")\n")
 
     for (curr, val) in currency_list
-        println(io, "Currency(:$curr)")
+        println(io, "Currency{:$curr}()")
     end
 end
 

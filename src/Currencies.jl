@@ -24,12 +24,12 @@ export Currency
 This is a singleton type, intended to be used as a label for dispatch purposes
 """
 struct Currency{S}
-    function Currency(S::Symbol)
+    function Currency{S}() where {S}
         haskey(_currency_data,S) && return _currencies[S] = new{S}()
         error("Currency $S is not defined.")
     end
 
-    Currency{S}() where {S} = _currencies[S]
+    Currency(S) = _currencies[S]
 end
 const _currencies = Dict{Symbol,Currency}()
 
@@ -61,9 +61,9 @@ Returns the ISO 4217 name associated with this value
 function name end
 
 currency(S::Symbol) = _currencies[S]
-unit(S::Symbol) = _currency_data[S][2]
-code(S::Symbol) = _currency_data[S][3]
-name(S::Symbol) = _currency_data[S][4]
+unit(S::Symbol) = _currency_data[S][1]
+code(S::Symbol) = _currency_data[S][2]
+name(S::Symbol) = _currency_data[S][3]
 
 symbol(::Type{Currency{S}}) where {S} = S
 currency(::Type{Currency{S}}) where {S} = currency(S)

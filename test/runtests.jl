@@ -23,7 +23,8 @@ end
 @testset "Validation" begin
     @test length(_currency_data) >= 155
     for (sym, ccy) in _currency_data
-        (cur, uni, cod, nam) = ccy
+        (uni, cod, nam) = ccy
+        cur = Currency(sym)
         @test symbol(cur) == sym
         @test length(string(sym)) == 3
         @test uni >= 0
