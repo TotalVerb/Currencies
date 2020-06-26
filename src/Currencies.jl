@@ -23,10 +23,15 @@ export Currency
 """
 This is a singleton type, intended to be used as a label for dispatch purposes
 """
-struct Currency{S} end
+struct Currency{S}
+    function Currency(S::Symbol)
+        haskey(_currency_data,S) && return _currencies[S] = new{S}()
+        error("Currency $S is not defined.")
+    end
 
-Currency(symbol::Symbol, unit::Integer, code::Integer, name::AbstractString) =
-    (get!(_currency_data, symbol) do ; (Currency{symbol}(), unit, code, name) ; end)[1]
+    Currency{S}() where {S} = _currencies[S]
+end
+const _currencies = Dict{Symbol,Currency}()
 
 include(joinpath(@__DIR__, "..", "deps", "currency-data.jl"))
 
@@ -55,7 +60,7 @@ Returns the ISO 4217 name associated with this value
 """
 function name end
 
-currency(S::Symbol) = _currency_data[S][1]
+currency(S::Symbol) = _currencies[S]
 unit(S::Symbol) = _currency_data[S][2]
 code(S::Symbol) = _currency_data[S][3]
 name(S::Symbol) = _currency_data[S][4]

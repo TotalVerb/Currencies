@@ -38,9 +38,13 @@ function genfile(io)
     end
     println(io, "const _currency_data = Dict(")
     for (curr, val) in currency_list
-        println(io, "    :$curr => (Currency{:$curr}(), $(val[1]), $(lpad(val[2], 4)), \"$(val[3])\"),")
+        println(io, "    :$curr => ($(val[1]), $(lpad(val[2], 4)), \"$(val[3])\"),")
     end
     println(io, ")\n")
+
+    for (curr, val) in currency_list
+        println(io, "Currency(:$curr)")
+    end
 end
 
 # Only download the file from datahub.io if not already present
