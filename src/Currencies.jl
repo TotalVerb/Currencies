@@ -25,13 +25,11 @@ This is a singleton type, intended to be used as a label for dispatch purposes
 """
 struct Currency{S}
     function Currency{S}() where {S}
-        haskey(_currency_data,S) && return _currencies[S] = new{S}()
+        haskey(_currency_data,S) && return new{S}()
         error("Currency $S is not defined.")
     end
-
-    Currency(S) = _currencies[S]
 end
-const _currencies = Dict{Symbol,Currency}()
+Currency(S) = Currency{S}()
 
 include(joinpath(@__DIR__, "..", "deps", "currency-data.jl"))
 
@@ -60,10 +58,10 @@ Returns the ISO 4217 name associated with this value
 """
 function name end
 
-currency(S::Symbol) = _currencies[S]
-unit(S::Symbol) = _currency_data[S][1]
-code(S::Symbol) = _currency_data[S][2]
-name(S::Symbol) = _currency_data[S][3]
+currency(S::Symbol) = _currency_data[S][1]
+unit(S::Symbol) = _currency_data[S][2]
+code(S::Symbol) = _currency_data[S][3]
+name(S::Symbol) = _currency_data[S][4]
 
 symbol(::Type{Currency{S}}) where {S} = S
 currency(::Type{Currency{S}}) where {S} = currency(S)
