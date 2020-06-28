@@ -1,34 +1,10 @@
 # Currencies.jl
 
-[pkg-url]: https://github.com/JuliaFinance/Currencies.jl.git
-
-[eval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/report.html
-[eval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/C/Currencies.svg
-
-[release]:      https://img.shields.io/github/release/JuliaFinance/Currencies.jl.svg
-[release-date]: https://img.shields.io/github/release-date/JuliaFinance/Currencies.jl.svg
-
-[julia-url]:    https://github.com/JuliaLang/Julia
-[julia-release]:https://img.shields.io/github/release/JuliaLang/julia.svg
-
-[license-img]:  http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
-[license-url]:  LICENSE.md
 [travis-url]:   https://travis-ci.org/JuliaFinance/Currencies.jl
 [travis-s-img]: https://travis-ci.org/JuliaFinance/Currencies.jl.svg
 [travis-m-img]: https://travis-ci.org/JuliaFinance/Currencies.jl.svg?branch=master
 
-[cov-url]:  https://codecov.io/gh/JuliaFinance/Currencies.jl
-[cov-s-img]:  https://codecov.io/gh/JuliaFinance/Currencies.jl/badge.svg
-[cov-m-img]:  https://codecov.io/gh/JuliaFinance/Currencies.jl/branch/master/graph/badge.svg
-
-[contrib]:    https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat
-
-[![][release]][pkg-url] [![][release-date]][pkg-url] [![][license-img]][license-url] [![contributions welcome][contrib]](https://github.com/JuliaFinance/Currencies.jl/issues)
-
-| **Info** | **Travis** | **Package Evaluator** | **Coverage** |
-|:------------------:|:---------------------:|:-----------------:|:---------------------:|
-| [![][julia-release]][julia-url] | [![][travis-s-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
-| Master | [![][travis-m-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
+[![][travis-s-img]][travis-url] [![][travis-m-img]][travis-url] 
 
 This package provides bare singleton types based on the standard ISO 4217 3-character alpha codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
 
