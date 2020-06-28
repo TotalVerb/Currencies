@@ -17,11 +17,6 @@
 [travis-s-img]: https://travis-ci.org/JuliaFinance/Currencies.jl.svg
 [travis-m-img]: https://travis-ci.org/JuliaFinance/Currencies.jl.svg?branch=master
 
-[app-s-url]:    https://ci.appveyor.com/project/JuliaFinance/currencies-jl
-[app-m-url]:    https://ci.appveyor.com/project/JuliaFinance/currencies-jl/branch/master
-[app-s-img]:    https://ci.appveyor.com/api/projects/status/chnj7xc6r0deux92?svg=true
-[app-m-img]:    https://ci.appveyor.com/api/projects/status/chnj7xc6r0deux92/branch/master?svg=true
-
 [cov-url]:  https://codecov.io/gh/JuliaFinance/Currencies.jl
 [cov-s-img]:  https://codecov.io/gh/JuliaFinance/Currencies.jl/badge.svg
 [cov-m-img]:  https://codecov.io/gh/JuliaFinance/Currencies.jl/branch/master/graph/badge.svg
