@@ -30,9 +30,7 @@
 | [![][julia-release]][julia-url] | [![][travis-s-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
 | Master | [![][travis-m-img]][travis-url] | [![][eval-img]][eval-url] | [![][cov-s-img]][cov-url]
 
-This is a core package for the JuliaFinance ecosytem. 
-
-It provides bare singleton types based on the standard ISO 4217 3-character alpha codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
+This package provides bare singleton types based on the standard ISO 4217 3-character alpha codes to be used primarily for dispatch in other JuliaFinance packages together with five methods:
 
 - `currency`: The singleton type for a particular currency symbol
 - `symbol`: The 3-character symbol of the currency.
@@ -49,7 +47,7 @@ A brief explanation and motivation for each is presented below.
 
 ## [Currencies.jl](https://github.com/JuliaFinance/Currencies.jl)
 
-As mentioned, this package defines standard currencies as primordial singleton types that can be thought of as labels.
+As mentioned, this package defines standard currencies as singleton types that can be thought of as labels.
 
 For example:
 
